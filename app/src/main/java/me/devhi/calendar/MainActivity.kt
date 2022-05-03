@@ -14,11 +14,12 @@ import me.devhi.calendar.viewmodel.MonthListViewModel
 
 class MainActivity : AppCompatActivity() {
     private val adapter by lazy { MonthAdapter(viewModel) }
+    private val appDatabase by lazy { AppDatabase.getInstance(this@MainActivity) }
     private val viewModel by lazy {
         MonthListViewModel(
             CalenderRepositoryImpl(
-                AppDatabase.getInstance(this@MainActivity).monthDao(),
-                AppDatabase.getInstance(this@MainActivity).dayDao()
+                appDatabase.monthDao(),
+                appDatabase.dayDao()
             )
         )
     }
@@ -59,10 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.monthList.observe(this) {
-            it.forEach { it.days.forEach { println(it.memo) } }
-            if (it != null) {
-                viewModel.shouldInitialize()
-            }
+            viewModel.shouldInitialize()
         }
 
     }

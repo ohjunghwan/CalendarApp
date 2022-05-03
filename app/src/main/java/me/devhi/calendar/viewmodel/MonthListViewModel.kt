@@ -33,9 +33,10 @@ class MonthListViewModel(
     }
 
     fun updatePosition(position: Int) {
-        if (position > 0) {
+        val list = monthList.value ?: return
+        if (position > 0 && position < list.size) {
             currentPosition = position
-            title.value = monthList.value?.get(position)?.monthVO?.time
+            title.value = list[position].monthVO.time
         }
     }
 

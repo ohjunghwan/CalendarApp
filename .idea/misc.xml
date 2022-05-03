@@ -6,7 +6,8 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.25462962962962965" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1455" />
         <entry key="app/src/main/res/layout-v23/item_day.xml" value="0.14629629629629629" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2806484295845998" />
         <entry key="app/src/main/res/layout/dialog_add_memo.xml" value="0.14629629629629629" />
         <entry key="app/src/main/res/layout/item_day.xml" value="0.14629629629629629" />
         <entry key="app/src/main/res/layout/item_day_empty.xml" value="0.10925925925925926" />

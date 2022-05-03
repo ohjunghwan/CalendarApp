@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: AppDatabase? = null
-        private const val NUMBER_OF_MONTH = 40
+        private const val NUMBER_OF_MONTH = 12
 
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
@@ -46,7 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
                     }
                 }).fallbackToDestructiveMigration().build()
 
-        private fun prepopulateDb(db: AppDatabase?) {
+        private suspend fun prepopulateDb(db: AppDatabase?) {
             if (db == null) {
                 return
             }
@@ -56,40 +56,29 @@ abstract class AppDatabase : RoomDatabase() {
                 val dayDao = db.dayDao()
                 val calendar = GregorianCalendar()
 
-
-                for (i in -NUMBER_OF_MONTH..NUMBER_OF_MONTH) {
-                    try {
-                        val calendar = GregorianCalendar(
-                            calendar[Calendar.YEAR],
-                            calendar[Calendar.MONTH] + i,
-                            1,
-                            0,
-                            0,
-                            0
+                (-NUMBER_OF_MONTH..NUMBER_OF_MONTH)
+                    .map {
+                        GregorianCalendar(
+                            calendar[Calendar.YEAR], calendar[Calendar.MONTH] + it, 1, 0, 0, 0
                         )
-
-                        val monthId = monthDao.insert(MonthVO(calendar.timeInMillis))
-
+                    }.forEach {
+                        val monthId = monthDao.insert(MonthVO(it.timeInMillis))
                         val dayOfWeek = calendar[Calendar.DAY_OF_WEEK] - 1
                         val max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-                        for (j in 0 until dayOfWeek) {
-                            dayDao.insertDay(DayVO(Type.EMPTY, monthId))
-                        }
-                        for (j in 1..max) {
-                            dayDao.insertDay(
-                                DayVO(
-                                    Type.NORMAL, monthId, GregorianCalendar(
-                                        calendar[Calendar.YEAR],
-                                        calendar[Calendar.MONTH],
-                                        j
-                                    )
+                        val emptyList = (0 until dayOfWeek).map { DayVO(Type.EMPTY, monthId) }
+                        val dayList = (1..max).map { day ->
+                            DayVO(
+                                Type.NORMAL,
+                                monthId,
+                                GregorianCalendar(
+                                    calendar[Calendar.YEAR],
+                                    calendar[Calendar.MONTH],
+                                    day
                                 )
                             )
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                        dayDao.insertAll(*emptyList.toTypedArray(), *dayList.toTypedArray())
                     }
-                }
             }
         }
 
