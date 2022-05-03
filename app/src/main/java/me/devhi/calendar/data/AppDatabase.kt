@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: AppDatabase? = null
-        private const val NUMBER_OF_MONTH = 12
+        private const val NUMBER_OF_MONTH = 20
 
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
@@ -56,7 +56,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val dayDao = db.dayDao()
                 val calendar = GregorianCalendar()
 
-                (-NUMBER_OF_MONTH..NUMBER_OF_MONTH)
+                (0..NUMBER_OF_MONTH)
                     .map {
                         GregorianCalendar(
                             calendar[Calendar.YEAR], calendar[Calendar.MONTH] + it, 1, 0, 0, 0
