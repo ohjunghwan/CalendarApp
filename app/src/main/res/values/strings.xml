@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">calendar</string>
+    <string name="cancel_button">취소</string>
+    <string name="add_button">확인</string>
+    <string name="add_memo_title">감정 기록하기</string>
+    <string name="calender_day_name_sun">일</string>
+    <string name="calender_day_name_mon">월</string>
+    <string name="calender_day_name_tues">화</string>
+    <string name="calender_day_name_wens">수</string>
+    <string name="calender_day_name_turs">목</string>
+    <string name="calender_day_name_fri">금</string>
+    <string name="calender_day_name_satur">토</string>
+</resources>
