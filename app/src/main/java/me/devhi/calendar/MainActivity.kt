@@ -58,10 +58,5 @@ class MainActivity : AppCompatActivity() {
         viewModel.showMemoDialog.observe(this) {
             MemoAddDialog(it, viewModel::addMemo).show(supportFragmentManager, "MemoAddDialog")
         }
-
-        viewModel.monthList.observe(this) {
-            viewModel.shouldInitialize()
-        }
-
     }
 }

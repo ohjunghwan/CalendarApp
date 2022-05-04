@@ -13,8 +13,6 @@ import me.devhi.calendar.utils.mvvm.SingleLiveEvent
 class MonthListViewModel(
     private val calenderRepository: CalenderRepository
 ) : ViewModel() {
-    private var isInitialize = false
-
     var currentPosition = 0
     var title = MutableLiveData<Long>()
     var monthList = calenderRepository.getMonthList().asLiveData()
@@ -49,15 +47,4 @@ class MonthListViewModel(
             calenderRepository.updateDay(day)
         }
     }
-
-    fun shouldInitialize() {
-        monthList.value?.let {
-            if (!isInitialize) {
-                updatePosition(it.size / 2)
-                goToPosition.value = currentPosition
-                isInitialize = true
-            }
-        }
-    }
-
 }
